@@ -5,7 +5,7 @@ Calculate word count in a text file!
 ## Installation
 
 ```bash
-\$ pip install pycount_sak
+$ pip install pycount_sak
 ```
 
 ## Usage
