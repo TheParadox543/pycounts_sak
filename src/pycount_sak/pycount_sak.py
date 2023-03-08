@@ -22,7 +22,7 @@ def load_text(input_file):
     --------
     >>> load_text("text.txt")
     """
-    """Load text from a text file and return as a string."""
+
     with open(input_file, "r") as file:
         text = file.read()
     return text
@@ -46,7 +46,7 @@ def clean_text(text):
     >>> clean_text("Early optimization is the root of all evil!")
     'early optimization is the root of all evil'
     """
-    """Lowercase and remove punctuation from a string."""
+
     text = text.lower()
     for p in punctuation:
         text = text.replace(p, "")
@@ -56,7 +56,7 @@ def clean_text(text):
 def count_words(input_file):
     """Count words in a text file.
 
-    Words are made lowercase and punctuation is removed 
+    Words are made lowercase and punctuation is removed
     before counting.
 
     Parameters
@@ -73,7 +73,7 @@ def count_words(input_file):
     --------
     >>> count_words("text.txt")
     """
-    """Count unique words in a string."""
+
     text = load_text(input_file)
     text = clean_text(text)
     words = text.split()

@@ -22,7 +22,7 @@ def plot_words(word_counts, n=10):
     >>> counts = count_words("text.txt")
     >>> plot_words(counts)
     """
-    """Plot a bar chart of word counts."""
+
     top_n_words = word_counts.most_common(n)
     word, count = zip(*top_n_words)
     fig = plt.bar(range(n), count)
