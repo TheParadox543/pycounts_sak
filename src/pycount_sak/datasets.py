@@ -1,4 +1,4 @@
-from importlib import resources
+from importlib.resources import as_file, files
 
 def get_flatland():
     """Get path to example "Flatland" [1]_ text file.
@@ -12,6 +12,6 @@ def get_flatland():
     ----------
     .. [1] E. A. Abbott, "Flatland", Seeley & Co., 1884.
     """
-    with resources.path("pycount_sak.data", "flatland.txt") as f:
+    with as_file(files("pycount_sak.data").joinpath("flatland.txt")) as f:
         data_file_path = f
     return data_file_path
