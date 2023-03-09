@@ -1,6 +1,9 @@
-from pycount_sak.pycount_sak import count_words
-from pycount_sak.datasets import get_flatland
 from collections import Counter
+from matplotlib.container import BarContainer
+
+from pycount_sak.datasets import get_flatland
+from pycount_sak.plotting import plot_words
+from pycount_sak.pycount_sak import count_words
 
 def test_count_words():
     """Test word counting from a file."""
@@ -23,3 +26,13 @@ def test_count_flatland():
                         'space': 1})
     actual = count_words(get_flatland())
     assert actual == expected, "Flatland quote counted incorrectly!"
+
+def test_plot_words():
+    """Test plotting of word counts."""
+    counts = Counter({'insanity': 1, 'is': 1, 'doing': 1,
+                    'the': 1, 'same': 1, 'thing': 1,
+                    'over': 2, 'and': 2, 'expecting': 1,
+                    'different': 1, 'results': 1})
+    fig = plot_words(counts)
+    assert isinstance(fig, BarContainer), "Wrong plot type"
+    assert len(fig.datavalues) == 10, "Incorrect number of bars plotted"
