@@ -4,14 +4,19 @@ from matplotlib.container import BarContainer
 from pycount_sak.datasets import get_flatland
 from pycount_sak.plotting import plot_words
 from pycount_sak.pycount_sak import count_words
-from pytest import raises
+from pytest import fixture, raises, mark
 
-def test_count_words():
-    """Test word counting from a file."""
-    expected = Counter({'insanity': 1, 'is': 1, 'doing': 1,
+@fixture
+def einstein_counts():
+    """Define Einstein counts fixture."""
+    return Counter({'insanity': 1, 'is': 1, 'doing': 1,
                         'the': 1, 'same': 1, 'thing': 1,
                         'over': 2, 'and': 2, 'expecting': 1,
                         'different': 1, 'results': 1})
+
+def test_count_words(einstein_counts: Counter):
+    """Test word counting from a file."""
+    expected = einstein_counts
     actual = count_words("tests/einstein.txt")
     assert actual == expected, "Einstein quote counted incorrectly!"
 
@@ -28,21 +33,25 @@ def test_count_words():
 #     actual = count_words(get_flatland())
 #     assert actual == expected, "Flatland quote counted incorrectly!"
 
-def test_plot_words():
+def test_plot_words(einstein_counts: Counter):
     """Test plotting of word counts."""
-    counts = Counter({'insanity': 1, 'is': 1, 'doing': 1,
-                    'the': 1, 'same': 1, 'thing': 1,
-                    'over': 2, 'and': 2, 'expecting': 1,
-                    'different': 1, 'results': 1})
+    counts = einstein_counts
     fig = plot_words(counts)
     assert isinstance(fig, BarContainer), "Wrong plot type"
     assert len(fig.datavalues) == 10, "Incorrect number of bars plotted"
 
-def test_plot_words_error():
+@mark.parametrize(
+    "obj",
+    [
+        3.141,
+        "test.txt",
+        ["list", "of", "words"]
+    ]
+)
+def test_plot_words_error(obj):
     """Check TypeError raised when Counter not used."""
     with raises(TypeError):
-        list_object = ["Pythons", "are", "not", "venomous"]
-        plot_words(list_object)
+        plot_words(obj)
 
 def test_integration():
     """Test count_words() and plot_words workflow."""
